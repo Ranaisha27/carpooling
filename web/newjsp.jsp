@@ -12,25 +12,30 @@
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>JSP Page</title>
+        <title>Login</title>
     </head>
     <body>
        <%
-           String uname=request.getParameter("uname");
+           String uname=request.getParameter("email");
            String pass=request.getParameter("pass");
            try{
-		String myUrl="jdbc:mysql://localhost/acadview";
+		String myUrl="jdbc:mysql://localhost/carpool";
 		//step 1:
 		Class.forName("com.mysql.jdbc.Driver");
       		//step 2:
 		Connection conn=DriverManager.getConnection(myUrl,"root","");
-		String query="Select user_name,password from users where user_name= '"+uname+"' and password='"+pass+"'";
+		String query="Select email,password from info where email= '"+uname+"' and password='"+pass+"'";
 		//step 3:
 		Statement st=conn.createStatement();
 		//step 4:
 		ResultSet rs =st.executeQuery(query);
 		if(rs.next()){
 			out.println("Logged in successfully");
+                     
+         String redirectURL = "buttons.html";
+        response.sendRedirect(redirectURL);
+
+                        
 		}  
                 else
                 out.println("Invalid username or password");
@@ -41,7 +46,7 @@
 			System.out.println("Got an exception! ");
 			System.out.println(e.getMessage());
 		}
-           out.print("Welcome "+ uname);
+           
         %>
     </body>
 </html>
